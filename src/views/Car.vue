@@ -4,6 +4,8 @@
     <div>name1:{{name1}} name2:{{name2}}</div>
     <div><input type="text" v-model="demo.name2" /></div>
     <div><button @click="toGoods">发送</button></div>
+    <br  />
+    <div><button @click="toAxios">跳转AXIOS</button></div>
   </div>
 </template>
 
@@ -30,6 +32,10 @@ export default {
        toGoods(){
            this.$store.dispatch('name2', this.demo.name2);
            this.$router.push("/goods")
+       },
+       // 跳转axios
+       toAxios(){
+         this.$router.push("/axiosPage")
        }
    }
 }
