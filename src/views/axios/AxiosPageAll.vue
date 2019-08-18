@@ -1,7 +1,7 @@
 <template>
   <div class="axios-page">
     <div>
-      <button @click="allPost">post方法</button>
+      <button @click="getAllAxios">post方法</button>
     </div>
   </div>
 </template>

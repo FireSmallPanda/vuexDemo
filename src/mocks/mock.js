@@ -18,5 +18,5 @@ Mock.mock('/recommed/data1', 'get', data1);
 
 // 设置所有ajax请求的超时时间，模拟网络传输耗时
 Mock.setup({
-    timeout: 2000-10000
+    timeout: 8000-10000
 })

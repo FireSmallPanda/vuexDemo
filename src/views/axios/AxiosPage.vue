@@ -4,7 +4,10 @@
       <div><button @click="putForm">put方法</button></div>
       <div><button @click="deleteForm">删除方法</button></div>
       <br />
-      <div><button @click="toAxiosAll">跳转AXIOS并发请求</button></div>
+      <div><button @click="toAxiosAll('axiosPageAll')">跳转AXIOS并发请求</button></div>
+      <div><button @click="toAxiosAll('axiosPageSL')">跳转AXIOS实例对象</button></div>
+      <div><button @click="toAxiosAll('axiosPageAOP')">跳转AXIOS拦截器</button></div>
+      <div><button @click="toAxiosAll('axiosPageCancel')">跳转AXIOS取消请求</button></div>
   </div>
 </template>
 
@@ -78,8 +81,8 @@ export default {
           })
       },
       // 跳转并发请求
-      toAxiosAll(){
-          this.$router.push("/axiosPageAll")
+      toAxiosAll(name="axiosPageAll"){
+          this.$router.push({name:name})
       }
   },
   mounted(){
