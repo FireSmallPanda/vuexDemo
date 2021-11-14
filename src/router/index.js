@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Car from '@/views/Car'
 import Goods from '@/views/Goods'
+import Index from '@/views/Index'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
-      name: 'Car',
-      component: Car
+      name: 'index',
+      component: Index
     },
     {
       path: '/goods',
@@ -20,7 +20,7 @@ export default new Router({
       path: '/axiosPage',
       name: 'axiosPage',
       component: () => import('@/views/axios/AxiosPage')
-    }, 
+    },
     {
       path: '/axiosPageAll',
       name: 'axiosPageAll',
@@ -41,5 +41,11 @@ export default new Router({
       name: 'axiosPageCancel',
       component: () => import('@/views/axios/axiosPageCancel')
     },
+    {
+      path: '/excel',
+      name: 'excel',
+      component: () => import('@/views/excel/Excel')
+
+    }
   ]
 })
