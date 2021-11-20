@@ -46,6 +46,19 @@ export default new Router({
       name: 'excel',
       component: () => import('@/views/excel/Excel')
 
+    },
+    {
+      path: '/excel',
+      name: 'excel',
+      component: () => import('@/views/excel/Excel')
+
+    },
+    {
+      // 自定义首页
+      path: '/indexLive',
+      name: 'indexLive',
+      component: () => import('@/views/indexLive/index/index.vue')
+
     }
   ]
 })

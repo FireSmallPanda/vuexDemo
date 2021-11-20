@@ -4,7 +4,7 @@
       class="link-item"
       v-for="(item, index) in links"
       :key="index"
-      @click="toLink(item);"
+      @click="toLink(item)"
     >
       {{ item.name }}
     </div>
@@ -18,7 +18,8 @@ export default {
     return {
       links: [
         { text: "vuex", name: "car" },
-        { text: "vuex导出Excel", name: "excel" }
+        { text: "vuex导出Excel", name: "excel" },
+        { text: "自定义的首页", name: "indexLive" }
       ]
     };
   },
