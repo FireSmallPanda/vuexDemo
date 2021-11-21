@@ -1,12 +1,7 @@
 <template>
-  <div class="pics">
-    <div class="pics-content" v-if="dataList">
-      <img
-        src="@/assets/images/pics2.png"
-        alt="图片"
-        v-if="content.type === 2"
-      />
-      <img src="@/assets/images/pics.png" alt="图片" v-else />
+  <div class="menus">
+    <div class="menus-content" v-if="dataList">
+      <img src="@/assets/images/menus.png" alt="图片" />
     </div>
 
     <!-- 骨架屏 -->
@@ -19,7 +14,7 @@
 <script>
 import "@/views/indexLive/index/common.css";
 export default {
-  name: "pics",
+  name: "menus",
   props: {
     content: {
       type: Object,
@@ -65,10 +60,10 @@ export default {
 </script>
 
 <style scoped>
-.pics {
+.menus {
   width: 100%;
 }
-.pics img {
+.menus img {
   width: 100%;
 }
 </style>

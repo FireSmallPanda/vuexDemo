@@ -1,0 +1,8 @@
+.skeleton-content {
+  min-height: 100px;
+  padding: 8px;
+}
+.skeleton-content .skeleton-item {
+  background-color: #ccc;
+  border-radius: 8px;
+}

@@ -1,12 +1,12 @@
 <template>
-  <div class="pics">
-    <div class="pics-content" v-if="dataList">
+  <div class="goods">
+    <div class="goods-content" v-if="dataList">
       <img
-        src="@/assets/images/pics2.png"
+        src="@/assets/images/goods2.png"
         alt="图片"
         v-if="content.type === 2"
       />
-      <img src="@/assets/images/pics.png" alt="图片" v-else />
+      <img src="@/assets/images/goods1.png" alt="图片" v-else />
     </div>
 
     <!-- 骨架屏 -->
@@ -19,7 +19,7 @@
 <script>
 import "@/views/indexLive/index/common.css";
 export default {
-  name: "pics",
+  name: "goods",
   props: {
     content: {
       type: Object,
@@ -65,10 +65,10 @@ export default {
 </script>
 
 <style scoped>
-.pics {
+.goods {
   width: 100%;
 }
-.pics img {
+.goods img {
   width: 100%;
 }
 </style>
