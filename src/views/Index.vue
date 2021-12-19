@@ -6,7 +6,7 @@
       :key="index"
       @click="toLink(item)"
     >
-      {{ item.name }}
+      {{ item.text }}
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
       links: [
         { text: "vuex", name: "car" },
         { text: "vuex导出Excel", name: "excel" },
-        { text: "自定义的首页", name: "indexLive" }
+        { text: "自定义的首页", name: "indexLive" },
+        { text: "可拖拽的组件", name: "draggable" }
       ]
     };
   },

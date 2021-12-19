@@ -59,6 +59,13 @@ export default new Router({
       name: 'indexLive',
       component: () => import('@/views/indexLive/index/index.vue')
 
+    },
+    {
+      // 可拖拽组件
+      path: '/draggable',
+      name: 'draggable',
+      component: () => import('@/views/draggable/Draggable.vue')
+
     }
   ]
 })
