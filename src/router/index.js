@@ -66,6 +66,14 @@ export default new Router({
       name: 'draggable',
       component: () => import('@/views/draggable/Draggable.vue')
 
+    },
+    {
+      // 动背景
+      path: '/liveBackGround',
+      name: 'liveBackGround',
+      component: () => import('@/views/liveBackGround/LiveBackGround.vue')
+
     }
+    
   ]
 })
