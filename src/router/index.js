@@ -73,7 +73,14 @@ export default new Router({
       name: 'liveBackGround',
       component: () => import('@/views/liveBackGround/LiveBackGround.vue')
 
-    }
+    },
+    {
+      // Vue修饰符
+      path: '/modifier',
+      name: 'modifier', 
+      component: () => import('@/views/modifier/Modifier.vue')
+
+    },
     
   ]
 })

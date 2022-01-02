@@ -21,7 +21,9 @@ export default {
         { text: "vuex导出Excel", name: "excel" },
         { text: "自定义的首页", name: "indexLive" },
         { text: "可拖拽的组件", name: "draggable" },
-        {text:'动画背景',name:"liveBackGround"}
+        {text:'动画背景',name:"liveBackGround"},
+        {text:'Vue修饰符',name:"modifier"},
+        
       ]
     };
   },
