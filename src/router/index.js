@@ -81,6 +81,13 @@ export default new Router({
       component: () => import('@/views/modifier/Modifier.vue')
 
     },
-    
+    {
+      // 毛玻璃效果
+      path: '/filterBlur',
+      name: 'filterBlur', 
+      
+      component: () => import('@/views/filterBlur/FilterBlur.vue')
+
+    }
   ]
 })

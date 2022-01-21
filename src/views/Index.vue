@@ -23,7 +23,7 @@ export default {
         { text: "可拖拽的组件", name: "draggable" },
         {text:'动画背景',name:"liveBackGround"},
         {text:'Vue修饰符',name:"modifier"},
-        
+        {text:'毛玻璃',name:"filterBlur"}
       ]
     };
   },
