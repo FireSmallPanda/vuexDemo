@@ -1,2 +1,4 @@
+#!/bin/sh 
 . "$(dirname "$0")/_/husky.sh"
-npm run lint
+PATH="/usr/Local/bin:/usr/Local/sbin:$PATH
+npx --no-install commitlint --edit $1
