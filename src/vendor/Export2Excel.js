@@ -1,104 +1,69 @@
 /* eslint-disable */
 require('script-loader!file-saver');
-require('script-loader!vendor/Blob');
-require('script-loader!xlsx/dist/xlsx.core.min');
+// require('script-loader!./Blob');
+require('script-loader!xlsx-style/dist/xlsx.core.min');
+require('script-loader!xlsx-style/xlsx');
 
-function generateArray(table) {
-  var out = [];
-  var rows = table.querySelectorAll('tr');
-  var ranges = [];
-  for (var R = 0; R < rows.length; ++R) {
-    var outRow = [];
-    var row = rows[R];
-    var columns = row.querySelectorAll('td');
-    for (var C = 0; C < columns.length; ++C) {
-      var cell = columns[C];
-      var colspan = cell.getAttribute('colspan');
-      var rowspan = cell.getAttribute('rowspan');
-      var cellValue = cell.innerText;
-      if (cellValue !== "" && cellValue == +cellValue) cellValue = +cellValue;
-
-      //Skip ranges
-      ranges.forEach(function (range) {
-        if (R >= range.s.r && R <= range.e.r && outRow.length >= range.s.c && outRow.length <= range.e.c) {
-          for (var i = 0; i <= range.e.c - range.s.c; ++i) outRow.push(null);
-        }
-      });
-
-      //Handle Row Span
-      if (rowspan || colspan) {
-        rowspan = rowspan || 1;
-        colspan = colspan || 1;
-        ranges.push({
-          s: {
-            r: R,
-            c: outRow.length
-          },
-          e: {
-            r: R + rowspan - 1,
-            c: outRow.length + colspan - 1
-          }
-        });
-      };
-
-      //Handle Value
-      outRow.push(cellValue !== "" ? cellValue : null);
-
-      //Handle Colspan
-      if (colspan)
-        for (var k = 0; k < colspan - 1; ++k) outRow.push(null);
-    }
-    out.push(outRow);
+// 设置表格中cell默认的字体，居中，颜色等
+/**
+{ auto: 1} specifying automatic values
+{ rgb: "FFAA00" } specifying a hex ARGB value
+{ theme: "1", tint: "-0.25"} specifying an integer index to a theme color and a tint value (default 0)
+{ indexed: 64} default value for fill.bgColor
+ */
+const defaultCellStyle = {
+  font: { name: "宋体", sz: 11, color: { rgb: "000000" } },
+  border: {
+    color: { auto: 1 }
+  },
+  alignment: {
+    /// 自动换行
+    wrapText: 1,
+    // 居中
+    horizontal: "center",
+    vertical: "center",
+    indent: 0
   }
-  return [out, ranges];
 };
 
-function datenum(v, date1904) {
-  if (date1904) v += 1462;
-  var epoch = Date.parse(v);
-  return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-}
-
-function sheet_from_array_of_arrays(data, opts) {
-  var ws = {};
-  var range = {
-    s: {
-      c: 10000000,
-      r: 10000000
-    },
-    e: {
-      c: 0,
-      r: 0
-    }
-  };
-  for (var R = 0; R != data.length; ++R) {
-    for (var C = 0; C != data[R].length; ++C) {
+// 从json转化为sheet，xslx中没有aoaToSheet的方法，该方法摘自官方test
+function sheet_from_array_of_arrays(data) {
+  const ws = {};
+  const range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } };
+  for (let R = 0; R !== data.length; ++R) {
+    for (let C = 0; C !== data[R].length; ++C) {
       if (range.s.r > R) range.s.r = R;
       if (range.s.c > C) range.s.c = C;
       if (range.e.r < R) range.e.r = R;
       if (range.e.c < C) range.e.c = C;
-      var cell = {
-        v: data[R][C]
-      };
-      if (cell.v == null) continue;
-      var cell_ref = XLSX.utils.encode_cell({
-        c: C,
-        r: R
-      });
 
+      // 这里生成cell的时候，使用上面定义的默认样式
+      const cell = { v: data[R][C], s: defaultCellStyle };
+      if (cell.v == null) continue;
+      const cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
+
+      /* TEST: proper cell types and value handling */
       if (typeof cell.v === 'number') cell.t = 'n';
       else if (typeof cell.v === 'boolean') cell.t = 'b';
       else if (cell.v instanceof Date) {
-        cell.t = 'n';
-        cell.z = XLSX.SSF._table[14];
-        cell.v = datenum(cell.v);
-      } else cell.t = 's';
-
+        cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+        cell.v = dateNum(cell.v);
+      }
+      else cell.t = 's';
       ws[cell_ref] = cell;
     }
   }
+
+  /* TEST: proper range */
   if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+
+  // 自适应宽度
+
   return ws;
+}
+
+export function formatJson(filterVal, jsonData) {
+  return jsonData.map(v => filterVal.map(j => v[j]))
 }
 
 function Workbook() {
@@ -110,71 +75,52 @@ function Workbook() {
 function s2ab(s) {
   var buf = new ArrayBuffer(s.length);
   var view = new Uint8Array(buf);
-  for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+  for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
   return buf;
 }
-
 export function export_table_to_excel(id) {
   var theTable = document.getElementById(id);
-  console.log('a')
+
   var oo = generateArray(theTable);
   var ranges = oo[1];
-
-  /* original data */
+  /* original data */
   var data = oo[0];
-  var ws_name = "SheetJS";
+  var ws_name = 'SheetJS';
   console.log(data);
-
   var wb = new Workbook(),
     ws = sheet_from_array_of_arrays(data);
-
-  /* add ranges to worksheet */
-  // ws['!cols'] = ['apple', 'banan'];
+  /* add ranges to worksheet */
+  // ws['!cols'] = ['apple', 'banan'];
   ws['!merges'] = ranges;
-
-  /* add worksheet to workbook */
+  /* add worksheet to workbook */
   wb.SheetNames.push(ws_name);
   wb.Sheets[ws_name] = ws;
-
+  ws['!cols'] = [{ wch: 4 }, { wch: 8 }];
   var wbout = XLSX.write(wb, {
     bookType: 'xlsx',
     bookSST: false,
-    type: 'binary'
+    type: 'binary',
   });
-
-  saveAs(new Blob([s2ab(wbout)], {
-    type: "application/octet-stream"
-  }), "test.xlsx")
+  saveAs(
+    new Blob([s2ab(wbout)], {
+      type: 'application/octet-stream',
+    }),
+    'test.xlsx'
+  );
 }
-
-function formatJson(jsonData) {
-  console.log(jsonData)
-}
-export function export_json_to_excel(th, jsonData, defaultTitle) {
-
-  /* original data */
-
-  var data = jsonData;
-  data.unshift(th);
-  var ws_name = "SheetJS";
-
-  var wb = new Workbook(),
-    ws = sheet_from_array_of_arrays(data);
-
-
-  /* add worksheet to workbook */
-  wb.SheetNames.push(ws_name);
-  wb.Sheets[ws_name] = ws;
-
-  var wbout = XLSX.write(wb, {
-    bookType: 'xlsx',
-    bookSST: false,
-    type: 'binary'
+/**
+ * 计算表格宽度
+ * @param {*} th 
+ * @param {*} ws 
+ * @returns 
+ */
+function matchWidth(th) {
+  let retn = []
+  console.log(th);
+  th.forEach(element => {
+    retn.push({ wch: (element + "").length * 2 })
   });
-  var title = defaultTitle || '列表'
-  saveAs(new Blob([s2ab(wbout)], {
-    type: "application/octet-stream"
-  }), title + ".xlsx")
+  return retn
 }
 
 /**
@@ -204,4 +150,32 @@ export function export_season_to_excel(th, jsonDatas, defaultTitle, sheetNames) 
   saveAs(new Blob([s2ab(wbout)], {
     type: "application/octet-stream"
   }), title + ".xlsx")
+}
+
+export function export_json_to_excel(th, jsonData, defaultTitle) {
+  /* original data */
+  var data = jsonData;
+  data.unshift(th);
+  var ws_name = 'sheet1';
+  var wb = new Workbook(),
+    ws = sheet_from_array_of_arrays(data);
+  /* add worksheet to workbook */
+  th.push()
+  // 自适应宽度再这里设置
+  // ws['!cols'] = matchWidth(th)//  [{wch:100},{wch:200}];
+  wb.SheetNames.push(ws_name);
+  wb.Sheets[ws_name] = ws;
+
+  var wbout = XLSX.write(wb, {
+    bookType: 'xlsx',
+    bookSST: false,
+    type: 'binary',
+  });
+  var title = defaultTitle || '列表';
+  saveAs(
+    new Blob([s2ab(wbout)], {
+      type: 'application/octet-stream',
+    }),
+    title + '.xlsx'
+  );
 }

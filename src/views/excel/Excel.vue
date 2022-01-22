@@ -38,6 +38,22 @@
     <p><input type="number" v-model="rows" />行</p>
     <p><input type="number" v-model="cols" />列</p>
     <button @click="outPutBigData">导出自定义大小表格信息</button>
+    <p>导出表格信息</p>
+    <table border id="table-data">
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>2</td>
+        <td>2</td>
+        <td>2</td>
+      </tr>
+    </table>
+    <button @click="outPutIdTable">导出Id表格信息</button>
   </div>
 </template>
 
@@ -50,36 +66,36 @@ export default {
         { name: "张明", loginTime: 16, id: 1, department: "生产部", sex: "男" },
         { name: "小金", loginTime: 11, id: 2, department: "生产部", sex: "女" },
         { name: "小凌", loginTime: 21, id: 3, department: "生产部", sex: "男" },
-        { name: "盖伦", loginTime: 5, id: 4, department: "测试部", sex: "男" }
+        { name: "盖伦", loginTime: 5, id: 4, department: "测试部", sex: "男" },
       ],
       seasonDatas: [
         [
           { name: "张明", score: 72 },
           { name: "小金", score: 21 },
           { name: "小凌", score: 16 },
-          { name: "盖伦", score: 84 }
+          { name: "盖伦", score: 84 },
         ],
         [
           { name: "张明", score: 32 },
           { name: "小金", score: 54 },
           { name: "小凌", score: 45 },
-          { name: "盖伦", score: 26 }
+          { name: "盖伦", score: 26 },
         ],
         [
           { name: "张明", score: 67 },
           { name: "小金", score: 87 },
           { name: "小凌", score: 45 },
-          { name: "盖伦", score: 78 }
+          { name: "盖伦", score: 78 },
         ],
         [
           { name: "张明", score: 54 },
           { name: "小金", score: 34 },
           { name: "小凌", score: 26 },
-          { name: "盖伦", score: 34 }
-        ]
+          { name: "盖伦", score: 34 },
+        ],
       ],
       rows: 100, // 行
-      cols: 100 // 列
+      cols: 100, // 列
     };
   },
   computed: {},
@@ -160,9 +176,15 @@ export default {
     },
     // 导出列表格式化数据的方法
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]));
-    }
-  }
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+    outPutIdTable() {
+      // 引入文件
+      const { export_table_to_excel } = require("vendor/Export2Excel.js");
+      debugger;
+      export_table_to_excel("table-data");
+    },
+  },
 };
 </script>
 
