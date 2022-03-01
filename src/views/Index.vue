@@ -18,13 +18,14 @@ export default {
     return {
       links: [
         { text: "vuex", name: "car" },
-        { text: "vuex导出Excel", name: "excel" },
+        { text: "vue导出Excel", name: "excel" },
         { text: "自定义的首页", name: "indexLive" },
         { text: "可拖拽的组件", name: "draggable" },
-        {text:'动画背景',name:"liveBackGround"},
-        {text:'Vue修饰符',name:"modifier"},
-        {text:'毛玻璃',name:"filterBlur"}
-      ]
+        { text: "动画背景", name: "liveBackGround" },
+        { text: "Vue修饰符", name: "modifier" },
+        { text: "毛玻璃", name: "filterBlur" },
+        { text: "vue导入Excel", name: "excelImportPage" },
+      ],
     };
   },
   computed: {},
@@ -32,8 +33,8 @@ export default {
     // 跳转链接
     toLink(item) {
       this.$router.push({ name: item.name });
-    }
-  }
+    },
+  },
 };
 </script>
 
