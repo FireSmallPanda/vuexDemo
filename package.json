@@ -12,7 +12,11 @@
   "dependencies": {
     "ali-oss": "^6.17.1",
     "axios": "^0.19.0",
+    "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
+    "html-docx-js": "^0.3.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "less": "^3.0.0",
     "less-loader": "4.1.0",
     "vue": "^2.5.2",
@@ -25,6 +29,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
+    "ant-design-vue": "^1.7.7",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -62,7 +67,8 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "vue-cropperjs": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",

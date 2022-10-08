@@ -97,6 +97,20 @@ export default new Router({
       path: '/wordImportPage',
       name: 'wordImportPage',
       component: () => import('@/views/wordImport/WordImportPage.vue')
+    },
+    {
+      // 图片剪切
+      path: '/imageUploadCut',
+      name: 'imageUploadCut',
+      component: () => import('@/views/imageUploadCut/ImageUploadCut.vue')
+      
+    },
+    {
+      // 网页转图片
+      path: '/dom2Image',
+      name: 'dom2Image',
+      component: () => import('@/views/Dom2Image/Dom2Image2.vue')
+      
     }
   ]
 });

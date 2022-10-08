@@ -1,0 +1,12 @@
+<div class="upload-image">
+  <a-modal :visible="visible" title="图片上传" @cancel="closeCropper">
+    <!-- 按钮区域 -->
+    <template slot="footer">
+      <a-button key="back" @click="open">重选</a-button>
+      <a-button key="submit" type="primary" @click="clipperSubmit">确认</a-button>
+    </template>
+    <!-- 截图区域 -->
+    <vue-cropper  class="upload-image-box" ref="cropper" :aspectRatio="aspectRatio" />
+  </a-modal>
+  <input type="file" :accept="accept" class="upload-image-input" id="upload-box" ref="upload" />
+</div>

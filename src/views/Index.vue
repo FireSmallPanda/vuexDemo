@@ -20,7 +20,10 @@ export default {
         { text: 'Vue修饰符', name: 'modifier' },
         { text: '毛玻璃', name: 'filterBlur' },
         { text: 'vue导入Excel', name: 'excelImportPage' },
-        { text: 'vue导入word', name: 'wordImportPage' }
+        { text: 'vue导入word', name: 'wordImportPage' },
+        { text: '图片裁切', name: 'imageUploadCut' },
+        { text: '网页转图片', name: 'dom2Image' },
+        
       ]
     };
   },
